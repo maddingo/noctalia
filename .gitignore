@@ -24,3 +24,7 @@ Thumbs.db
 result/
 result
 result-*
+
+# Ubuntu 24.04 install script
+
+third_party/
