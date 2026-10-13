@@ -71,7 +71,7 @@ sudo apt install meson g++ just \
   libsecret-1-dev libsodium-dev \
   libsdbus-c++-dev libpipewire-0.3-dev libwireplumber-0.5-dev \
   libpam0g-dev libpolkit-agent-1-dev libpolkit-gobject-1-dev \
-  libcurl4-openssl-dev libwebp-dev libjxl-dev libsndfile1-dev librsvg2-dev \
+  libcurl4-gnutls-dev libwebp-dev libjxl-dev libsndfile1-dev librsvg2-dev \
   libqalculate-dev libxml2-dev \
   libmd4c-dev libtomlplusplus-dev libical-dev \
   nlohmann-json3-dev libstb-dev \
@@ -110,6 +110,11 @@ sudo moss install meson gcc clang just \
   nlohmann-json stb \
   jemalloc-devel
 ```
+
+On Debian and Ubuntu the libcurl development packages come in mutually exclusive TLS flavours, and
+`libqalculate-dev` depends on `libcurl4-gnutls-dev`. Requesting `libcurl4-openssl-dev` alongside it is
+unsatisfiable, so the list above uses the GnuTLS flavour. Noctalia resolves curl through the generic `libcurl`
+pkg-config module and works with either flavour.
 
 Vendored dependencies, with no system package needed: `Wuffs`,
 `Luau`, `fzy`, and Material Color Utilities.
