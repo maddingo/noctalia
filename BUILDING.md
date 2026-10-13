@@ -145,9 +145,16 @@ disable it explicitly.
 
 Sanitizer runtime packages are only needed for ASan/UBSan builds configured with `just configure asan`.
 
-The sources are built as C++23, which requires GCC 13+ or Clang 16+. Current rolling and recent stable distros (Arch,
-Fedora 38+, Debian 13, Ubuntu 24.04+) ship a new enough compiler by default. On Debian 12 "bookworm" install `g++-13`
-and point Meson at it (e.g. `CXX=g++-13 just configure`).
+The sources are built as C++23. On GCC the binding constraint is `<print>`, which libstdc++ only ships from GCC 14, so
+**GCC 14+** is required — not GCC 13. Clang builds against libc++, which needs a release new enough to provide `<print>`
+as well. Current rolling and recent stable distros (Arch, Fedora 40+, Debian 13, Ubuntu 26.04+) ship a new enough
+compiler by default. Ubuntu 24.04 "noble" defaults to GCC 13 and needs `g++-14`; Debian 12 "bookworm" needs a
+backported `g++-14`. Point Meson at it by setting **both** compilers, not just `CXX` — leaving `CC` at the default makes
+release builds fail at link time with an LTO bytecode version mismatch:
+
+```sh
+CC=gcc-14 CXX=g++-14 just configure release
+```
 
 ## Building and installing
 
